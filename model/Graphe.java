@@ -1,6 +1,8 @@
 package model;
 
 public class Graphe {
+	public static int numNiveaux=10;
+	public static int sommetsParNiveaux=10;
 	public Sommet[][] niveaux;
 	public String nom;
 	public int id;
