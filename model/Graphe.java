@@ -8,9 +8,13 @@ public class Graphe {
 	public int id;
 	
 	public Graphe(){
-		niveaux= new Sommet[10][10];
+		niveaux= new Sommet[numNiveaux][sommetsParNiveaux];
 	}
 	
+	public Sommet[] getNiveau(int numeroNiv){
+		return niveaux[numeroNiv];
+	};
+
 	public int ajoutSommet(Sommet som,int niveau){
 		if(niveau<0){
 			System.out.println("err : niveau negatif");
@@ -34,14 +38,11 @@ public class Graphe {
 	};
 	
 	public void ajoutArc(String psommetDebut,String psommetFin,Double poids){
-		
 		Arc nouvelArc = new Arc(sommetDebut,sommetFin,poids);
-		
-		
 	};
 	
-	public Sommet[] getNiveau(int numeroNiv){};
-	
+	public Sommet getEntree(){}
+
 	public void afficheNiveau(int niveau){
 		for (int i=0;(i<niveaux[niveau].length)&&(niveaux[niveau][i]!=null);i++){
 			System.out.println(niveaux[niveau][i]);
