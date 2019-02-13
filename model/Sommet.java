@@ -4,8 +4,8 @@ public class Sommet {
 	public int id;
 	public Double etiquette;
 	private String nom;
-	private Arc[] suivants=new Arc[10];
-	private Arc[] precedents=new Arc[10];
+	public Arc[] suivants=new Arc[10];
+	public Arc[] precedents=new Arc[10];
 	private Sommet precedentsOptimal;
 	
 	public Sommet(String nom){
@@ -16,7 +16,7 @@ public class Sommet {
 		return etiquette;
 	}
 	
-	public setEtiquette(Double nouvelleValeur){
+	public void setEtiquette(Double nouvelleValeur){
 		this.etiquette=nouvelleValeur;
 	}
 

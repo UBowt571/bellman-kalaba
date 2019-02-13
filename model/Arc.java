@@ -8,8 +8,8 @@ public class Arc {
 	public int id;
 	
 	public Arc(Sommet psommetDebut,Sommet psommetFin,Double poids){
-		this.sommetDebut=psommetDebut;
-		this.sommetFin=psommetFin;
+		this.origine=psommetDebut;
+		this.extremite=psommetFin;
 		this.poids=poids;
 	}
 }

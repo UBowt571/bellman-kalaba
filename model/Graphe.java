@@ -37,8 +37,18 @@ public class Graphe {
 		}
 	};
 	
-	public void ajoutArc(String psommetDebut,String psommetFin,Double poids){
-		Arc nouvelArc = new Arc(sommetDebut,sommetFin,poids);
+	public void ajoutArc(Sommet psommetDebut,Sommet psommetFin,Double poids){
+		Arc nouvelArc = new Arc(psommetDebut,psommetFin,poids);
+		int i =0;
+		for(i =0;(i<psommetDebut.suivants.length)&&(psommetDebut.suivants[i]!=null);i++){
+
+		}
+		psommetDebut.suivants[i]=nouvelArc;
+		i =0;
+		for(i =0;(i<psommetFin.precedents.length)&&(psommetFin.precedents[i]!=null);i++){
+
+		}
+		psommetFin.precedents[i]=nouvelArc;
 	};
 	
 	public Sommet getEntree(){}
