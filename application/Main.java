@@ -1,5 +1,7 @@
 package application;
 	
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Group;
@@ -14,23 +16,28 @@ import model.*;
 
 
 public class Main extends Application {
+	private Circle[] table;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			System.out.println("start");
 			
-			 //Creating a circle object         
-	        Circle circle = new Circle();
-	        circle.setCenterX(20.0); 
-	        circle.setCenterY(20.0); 
-	        circle.setRadius(10.0);
-	        String color = "red";
-	        circle.setFill(Paint.valueOf(color));
+			table = new Circle[2];
+	        table[0]=new Circle();
+	        table[0].setCenterX(50.0);
+	        table[0].setCenterY(20.0);
+	        table[0].setRadius(10.0);
+	        table[0].setFill(Paint.valueOf("red"));
+	        table[1]=new Circle();
+	        table[1].setCenterX(20.0);
+	        table[1].setCenterY(20.0);
+	        table[1].setRadius(10.0);
+	        table[1].setFill(Paint.valueOf("green"));
+			System.out.println("start");
 	        
-	        
-			BorderPaneCircles root = (BorderPaneCircles)FXMLLoader.load(getClass().getResource("GraphDisplayer.fxml"));
+			//BorderPaneCircles root = (BorderPaneCircles)FXMLLoader.load(getClass().getResource("GraphDisplayer.fxml"));
 			//Creating a Group object  
-		    //Group root = new Group(circle);
+		    Group root = new Group(table);
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Sample Application"); 
@@ -65,8 +72,6 @@ public class Main extends Application {
         System.out.println(g.getNiveau(2)
             .getSommets().get(0)
             .getSuivants().get(0).getExtremite().getNom());
-        
-       
         
 		launch(args);
 	}
