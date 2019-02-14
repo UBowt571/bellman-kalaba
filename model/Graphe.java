@@ -1,72 +1,94 @@
 package model;
 
+import java.util.ArrayList;
+
+/**
+ * Décrit un graphe orienté, sans circuit. Il est composé de niveaux, eux-même 
+ * composés de sommets.
+ * Il a été conceptualisé de sorte à pouvoir implémenter l'algorithme de 
+ * Bellman-Kalaba.
+ */
 public class Graphe {
-	public final int numNiveaux=10;
-	public final int sommetsParNiveaux=10;
-	public Sommet[][] niveaux;
-	public String nom;
-	public int id;
-	
-	public Graphe(){
-		niveaux= new Sommet[numNiveaux][sommetsParNiveaux];
-	}
-	
-	public Sommet[] getNiveau(int numeroNiv){
-		return niveaux[numeroNiv];
-	};
-
-	public int ajoutSommet(Sommet som,int niveau){
-		if(niveau<0){
-			System.out.println("err : niveau negatif");
-			return 0;
-		}else if (niveau==0){
-			if(niveaux[0][0]!=null){
-				System.out.println("Deja un sommet au niveau 0");
-				return 0;
-			}else{
-				niveaux[niveau][0]=som;
-				return 1;
-			}
-		}else{
-			int i=0;
-			while((i<niveaux[niveau].length)&&(niveaux[niveau][i]!=null)){
-				i++;
-			}
-			niveaux[niveau][i]=som;
-			return 1;
-		}
-	};
-	
-	public void ajoutArc(Sommet psommetDebut,Sommet psommetFin,Double poids){
-		Arc nouvelArc = new Arc(psommetDebut,psommetFin,poids);
-		int i =0;
-		for(i =0;(i<psommetDebut.suivants.length)&&(psommetDebut.suivants[i]!=null);i++){
-
-		}
-		psommetDebut.suivants[i]=nouvelArc;
-		i =0;
-		for(i =0;(i<psommetFin.precedents.length)&&(psommetFin.precedents[i]!=null);i++){
-
-		}
-		psommetFin.precedents[i]=nouvelArc;
-	};
-	
-	public Sommet getEntree(){}
-
-	public void afficheNiveau(int niveau){
-		for (int i=0;(i<niveaux[niveau].length)&&(niveaux[niveau][i]!=null);i++){
-			System.out.println(niveaux[niveau][i]);
-		}
-	}
-	
-	private Sommet getSommetByName(String nomSommet){
-		int j=0,i=0;
-		for(i =0; (  i<niveaux.length  )  &&  (niveaux[i][0]!=null)  ;i++){
-			
-			for (j = 0; (j<niveaux[i].length)  &&  (niveaux[i][j]!=null)  &&  (niveaux[i][j].getNom()!=nomSommet)  ;j++  ){}
-			
-		}
-		return niveaux[i][j];
-	}
+    
+    /** L'identifiant du graphe */
+    private int id;
+    
+    /** Le nom du graphe*/
+    private String nom;
+    
+    /** Les niveaux du graphe */
+    private ArrayList<Niveau> niveaux;
+    
+    /**
+     * Constructeur
+     * @param matriceAdjPonderees la matrice d'adjacences pondérées du graphe
+     * @param niveauxSommets indication des niveaux pour chacun des sommets
+     * @throws IllegalArgumentException s'il n'y a pas autant d'éléments dans les 
+     * tables matriceAdjPonderees et niveauxSommets ou si des poids négatifs sont 
+     * utilisés.
+     */
+    public Graphe(double[][] matriceAdjPonderees, int[] niveauxSommets) throws IllegalArgumentException {
+        Sommet sommets[] = new Sommet[matriceAdjPonderees.length];
+        if (matriceAdjPonderees.length != niveauxSommets.length) {
+            throw new IllegalArgumentException("Les paramètres matriceAdjPonderees "
+                    + "et niveauxSommets n'ont pas le même nombre d'éléments.");
+        } else {
+            /* Créer les sommets */
+            for (int i = 0 ; i < sommets.length ; i++) {
+                //0b1000001 = ASCII de 'A'
+                char nomSommet = (char) (0b1000001 + i);
+                sommets[i] = new Sommet(Character.toString(nomSommet));
+            }
+            
+            /* Créer les arcs */
+            for (int i = 0 ; i < matriceAdjPonderees.length ; i++) {
+                ArrayList<Arc> suivants = new ArrayList<>();
+                for (int j = 0 ; j < matriceAdjPonderees[i].length ; j++) {
+                    if (matriceAdjPonderees[i][j] < 0) {
+                        throw new IllegalArgumentException("Les poids de la matrice "
+                            + "doivent être positifs (ou nul si inexistant).");
+                    }
+                    if (matriceAdjPonderees[i][j] > 0) {
+                        suivants.add(new Arc(sommets[i], sommets[j], 
+                            matriceAdjPonderees[i][j]));
+                    }
+                }
+                sommets[i].setSuivants(suivants);
+            }
+            
+            /* Affecte les sommets aux graphes pour chaque niveau */
+            this.niveaux = new ArrayList<>();
+            int niveau, nbNiveaux;
+            for (int i = 0 ; i < sommets.length ; i++) {
+                niveau = niveauxSommets[i];
+                nbNiveaux = this.niveaux.size();
+                //vérifie s'il y a assez de niveaux initialisés
+                if (niveau >= nbNiveaux) {
+                    //initialise les niveaux manquants
+                    for (int j = nbNiveaux; j <= niveau ; j++) {
+                        this.niveaux.add(new Niveau());
+                    }
+                }
+                this.niveaux.get(niveau).addSommet(sommets[i]);
+            }
+            
+        }
+    }
+    
+    /** 
+     * Accède à un niveau donné.
+     * @return le niveau à atteindre
+     */
+    public Niveau getNiveau(int i) {
+        return this.niveaux.get(i);
+    }
+    
+    /** 
+     * Donne le nombre de niveaux du graphe
+     * @return le nombre de niveaux du graphe
+     */
+    public int getNbNiveaux() {
+        return this.niveaux.size();
+    }
 	
 }
