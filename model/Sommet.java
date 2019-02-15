@@ -16,13 +16,16 @@ public class Sommet {
     private String nom;
     
     /** La valeur attribuée au sommet lors de l'algo */
-    private String etiquette;
+    private double etiquette;
     
     /** Les arcs reliés aux sommets suivants */
     private ArrayList<Arc> suivants;
     
     /** Les arcs reliés aux sommets précédents */
     private ArrayList<Arc> precedents;
+    
+    /** Les sommets précédents dans les chemins optimaux calculés */
+    private ArrayList<Sommet> precedentsOptimaux;
     
     /**
      * Constructeur
@@ -32,6 +35,7 @@ public class Sommet {
         this.nom = nom;
         this.suivants = new ArrayList<>();
         this.precedents = new ArrayList<>();
+        this.precedentsOptimaux = new ArrayList<>();
     }
     
     /**
@@ -84,6 +88,51 @@ public class Sommet {
      */
     private void addPrecedent(Arc precedent) {
         this.precedents.add(precedent);
+    }
+    
+    /**
+     * Getter etiquette
+     * @return etiquette
+     */
+    public double getEtiquette() {
+        return this.etiquette;
+    }
+    
+    /**
+     * Setter etiquette
+     * @param etiquette
+     */
+    public void setEtiquette(double etiquette) {
+        this.etiquette = etiquette;
+    }
+    
+    /**
+     * Getter precedentsOptimaux
+     * @return precedentsOptimaux
+     */
+    public ArrayList<Sommet> getPrecedentsOptimaux() {
+        return this.precedentsOptimaux;
+    }
+    
+    /**
+     * Setter precedentsOptimaux
+     * @param precedentsOptimaux
+     */
+    public void setPrecedentsOptimaux(ArrayList<Sommet> precedentsOptimaux) {
+        this.precedentsOptimaux = precedentsOptimaux;
+    }
+    
+    /**
+     * Ajoute un sommet aux précédents optimaux
+     * @param sommet 
+     */
+    public void addPrecedentOptimal(Sommet sommet) {
+        this.precedentsOptimaux.add(sommet);
+    }
+    
+    @Override
+    public String toString() {
+        return this.getNom();
     }
     
 }

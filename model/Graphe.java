@@ -90,5 +90,21 @@ public class Graphe {
     public int getNbNiveaux() {
         return this.niveaux.size();
     }
+    
+    /** 
+     * Retourne le sommet de niveau 0
+     * @return le sommet entrée
+     */
+    public Sommet getEntree() {
+        return this.niveaux.get(0).getSommets().get(0);
+    }
+    
+    /** 
+     * Retourne le sommet de niveau max
+     * @return le sommet sortie
+     */
+    public Sommet getSortie() {
+        return this.niveaux.get(this.niveaux.size()-1).getSommets().get(0);
+    }
 	
 }
