@@ -1,11 +1,34 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Stack;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import model.*;
 
-public class Main {
+public class Main extends Application {
+	private static Circle circle;
+	
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			VBox root = (VBox)FXMLLoader.load(getClass().getResource("GraphDisplayer.fxml"));
+			//Creating a Group object  
+		    //Group root = new Group(circle);
+			Scene scene = new Scene(root,637,400);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setTitle("Sample Application"); 
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
     
     /**
      * Recherche du (des) chemin(s) optimal(aux) avec l'algorithme de Bellman-Kalaba
@@ -146,24 +169,6 @@ public class Main {
     }
     
     public static void main(String[] args) {
-//        Sommet sommetA = new Sommet("A");
-//        Sommet sommetB = new Sommet("B");
-//        ArrayList<Arc> suivants = new ArrayList<>();
-//        
-//        suivants.add(new Arc(sommetA,sommetB,2));
-//        
-//        sommetA.setSuivants(suivants);
-//        
-//        System.out.println(sommetA.getSuivants().get(0).getExtremite().getNom());
-//        System.out.println(sommetB.getPrecedents().get(0).getOrigine().getNom());
-//        System.out.println("OK");
-
-//        double[][] matrice = {
-//            {0,6,8,10},
-//            {0,0,2,0},
-//            {0,0,0,2},
-//            {0,0,0,0}
-//        };
         double[][] matrice = {
             {0,8,3,6,10},
             {0,0,0,0,2},
@@ -175,26 +180,13 @@ public class Main {
         Graphe g = new Graphe(matrice,niveauxSommets);
         
         bellmanKalaba(g, true);
-//        System.out.println(g.getNbNiveaux());
-//        System.out.println(g.getNiveau(2)
-//            .getSommets().get(0)
-//            .getPrecedents().get(0).getOrigine());
-//        System.out.println(g.getNiveau(2)
-//            .getSommets().get(0)
-//            .getPrecedents().get(1).getOrigine());
-//        System.out.println(g.getNiveau(2)
-//            .getSommets().get(0)
-//            .getSuivants().get(0).getExtremite());
-//        System.out.println(g.getNiveau(3)
-//            .getSommets().get(0).getEtiquette());
-//        System.out.println(g.getNiveau(3)
-//            .getSommets().get(0)
-//            .getPrecedentsOptimaux().get(0));
-//        System.out.println(g.getNiveau(3)
-//            .getSommets().get(0)
-//            .getPrecedentsOptimaux().get(1));
-
         
+        /*circle=new Circle();
+        circle.setCenterX(50.0);
+        circle.setCenterY(20.0);
+        circle.setRadius(10.0);
+        circle.setFill(Paint.valueOf("red"));*/
         
+        launch(args);
     }
 }
