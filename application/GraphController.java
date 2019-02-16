@@ -49,8 +49,8 @@ public class GraphController {
 		fileChooser.getExtensionFilters().addAll(
 			new ExtensionFilter("Text Files", "*.csv")
 		);
-		File folderToStart= new File(new String("C:\\Users\\Admin\\workspace-MARS(2)"));
-		fileChooser.setInitialDirectory(folderToStart);
+		//File folderToStart= new File(new String("C:\\Users\\Admin\\workspace-MARS(2)"));
+		//fileChooser.setInitialDirectory(folderToStart);
 
 		File selectedFile = fileChooser.showOpenDialog(null);
  
