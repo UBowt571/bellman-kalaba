@@ -17,9 +17,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+            /** Routine par défaut du chargement du fichier .fxml */
 			VBox root = (VBox)FXMLLoader.load(getClass().getResource("GraphDisplayer.fxml"));
-			//Creating a Group object  
-		    //Group root = new Group(circle);
 			Scene scene = new Scene(root,637,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Sample Application"); 
