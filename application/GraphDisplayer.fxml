@@ -14,10 +14,10 @@
   <children>
     <MenuBar fx:id="test" VBox.vgrow="NEVER">
       <menus>
-        <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
+        <Menu fx:id="menuFile" mnemonicParsing="false" text="Fichier">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#browseFiles" text="Open…" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" onAction="#browseFiles" text="Ouvrir…" />
+            <MenuItem mnemonicParsing="false" onAction="#exitApp" text="Quitter" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
