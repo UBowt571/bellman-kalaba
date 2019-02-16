@@ -15,7 +15,7 @@ public class Main extends Application {
 			VBox root = (VBox)FXMLLoader.load(getClass().getResource("GraphDisplayer.fxml"));
 			Scene scene = new Scene(root,637,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setTitle("Sample Application"); 
+			primaryStage.setTitle("BellmanKalaba"); 
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
