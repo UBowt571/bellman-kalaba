@@ -186,7 +186,6 @@ public class GraphController {
 		}
 		return resulTable;
 	}
-}
 
 	@FXML
 	public void exitApp(ActionEvent event){

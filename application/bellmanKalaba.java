@@ -85,9 +85,9 @@ public class bellmanKalaba {
         ArrayList<Integer> indicesCheminsTraites = new ArrayList<>(); //indices des chemins déjà traiter 
                                                                       //(utiliser pour mettre c à jour)
         int nbChCrees = 0; //nombre de chemins alternatifs créés
-        String chInitial; //chemin de base utilisé pour créer les chemins alternatifs (cas d'embranchements)
+        boolean continuer; //indique si le parcours des indices des chemins traités doit continuer ou non
+        String base; //chemin de base utilisé pour créer les chemins alternatifs (cas d'embranchements)
                 
-        int i; //indice de sommet précédent
         ArrayList<Sommet> sommetsPrecedents; //les sommets précédents l'extrémité courante lors de la construction du chemin
         Sommet sommetPrecedent; //sommet précédent de extremite en traitement
         
@@ -109,18 +109,18 @@ public class bellmanKalaba {
          */
         while (!pile.isEmpty()) {
             extremite = pile.pop();
-            chInitial = chemins.get(c);
+            base = chemins.get(c);
             sommetsPrecedents = extremite.getPrecedentsOptimaux();
             //le dernier sommet précédent traité est le dernier à être inséré dans la pile
             //et donc le prochain à être traîté. Puisque qu'il est inséré dans le chemin 
-            //courant, c n'a pas besoin de changer.
-            for (i = sommetsPrecedents.size() - 1 ; i >= 0 ; i--) {
+            //courant, c n'a pas besoin de changer jusqu'au bout du chemin.
+            for (int i = 0 ; i < sommetsPrecedents.size() ; i++) {
                 sommetPrecedent = sommetsPrecedents.get(i);
                 pile.add(sommetPrecedent);
-                if (i == 0) {//ajout du dernier / de l'unique sommet précédent au chemin courant
+                if (i == sommetsPrecedents.size() - 1) {//ajout du dernier / de l'unique sommet précédent au chemin courant
                     chemins.set(c, sommetPrecedent.toString() + chemins.get(c));
                 } else {//duplication du chemin courant et ajout du sommet précédent
-                    chemins.add(sommetPrecedent.toString() + chInitial);
+                    chemins.add(sommetPrecedent.toString() + base);
                     nbChCrees++;
                 }
             }
@@ -128,15 +128,12 @@ public class bellmanKalaba {
             //à la fin du traitement du sommet, on détermine quelle valeur doit prendre c
             if (sommetsPrecedents.isEmpty()) {
                 indicesCheminsTraites.add(c);
-                if (c < nbChCrees) {
-                    c = nbChCrees;
-                } else {
-                    boolean continuer = true;
-                    for (int j = nbChCrees; j >= 0 && continuer ; j--) {
-                        if (!indicesCheminsTraites.contains(j)) {
-                            c = j;
-                            continuer = false;
-                        }
+                continuer = true;
+                //on prend le dernier chemin créé non traité
+                for (int j = nbChCrees; j >= 0 && continuer ; j--) {
+                    if (!indicesCheminsTraites.contains(j)) {
+                        c = j;
+                        continuer = false;
                     }
                 }
             }
