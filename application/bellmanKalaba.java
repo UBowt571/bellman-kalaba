@@ -52,11 +52,16 @@ public class bellmanKalaba {
                     //valeur à comparer
                     etiquetteTemporaire = precedent.getOrigine().getEtiquette() + precedent.getPoids();
                     if (details) {
-                        append(" " + etiquetteTemporaire);
+                        append("  " + precedent.getOrigine() + ":" + etiquetteTemporaire);
                     }
                     if (etiquetteTemporaire <= s.getEtiquette()) {
                         s.setEtiquette(etiquetteTemporaire);
-                        //retient le chemin minimum pris
+                    }
+                }
+                /* on retient tous les sommets ayant la plus faible étiquette */
+                for (Arc precedent : precedents) {
+                    etiquetteTemporaire = precedent.getOrigine().getEtiquette() + precedent.getPoids();
+                    if (etiquetteTemporaire == s.getEtiquette()) {
                         s.addPrecedentOptimal(precedent.getOrigine()) ;
                     }
                 }
