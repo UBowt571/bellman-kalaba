@@ -49,15 +49,16 @@ public class GraphController {
 		fileChooser.getExtensionFilters().addAll(
 			new ExtensionFilter("Text Files", "*.csv")
 		);
-		//File folderToStart= new File(new String("C:\\Users\\Admin\\workspace-MARS(2)"));
-		//fileChooser.setInitialDirectory(folderToStart);
+		File folderToStart= new File(new String("C:\\Users\\Admin\\workspace-MARS(2)\\Bellman-Kalaba\\src"));
+		fileChooser.setInitialDirectory(folderToStart);
 
 		File selectedFile = fileChooser.showOpenDialog(null);
  
 			if (selectedFile != null) {
 				System.out.println("File selected: " + selectedFile.getAbsolutePath());
 				FileName.setText("File selected: "+selectedFile.getName());
-    			readCsv(selectedFile);
+				textArea.setText("	Matrice : ");
+				readCsv(selectedFile);
 			}
 			else {
 				System.out.println("File selection cancelled.");
@@ -85,6 +86,7 @@ public class GraphController {
 		        }
 		        
 				matrice.add(csvToDbl(csvLine));
+				textArea.setText(textArea.getText()+"\n"+matrice.get(i));
 				if(i==0){
 					nbNiveaux=matrice.get(0).size();
 				}
@@ -93,6 +95,7 @@ public class GraphController {
 			String csvLine=scanner.nextLine();
 			csvLine=scanner.nextLine();
 			niveaux=csvToInt(csvLine);
+			textArea.setText(textArea.getText()+"\n\n	Niveaux :\n"+niveaux);
 			
 
 			return matrice;
@@ -153,10 +156,16 @@ public class GraphController {
      * Lance la résolution du chemin avec l'algorithme de Bellman - Kalaba
      */
 	public void startBellmanKalaba(){
-		System.out.println("Debut Algo bellmanK");
-		g=new Graphe(fromDoubleArraylistToDoubleTable(matrice),fromIntegerArraylistToIntegerTable(niveaux));
-		bellmanKalaba.textArea=this.textArea;
-		bellmanKalaba.start(g, true);
+		try{
+			g=new Graphe(fromDoubleArraylistToDoubleTable(matrice),fromIntegerArraylistToIntegerTable(niveaux));
+			bellmanKalaba.textArea=this.textArea;
+			System.out.println("Debut Algo bellmanK");
+			textArea.setText("");
+			//afficherImage();
+			bellmanKalaba.start(g, true);
+		}catch(NullPointerException e){
+			displayErrMsg(e);
+		}
 	}
 
 	/**
@@ -186,8 +195,13 @@ public class GraphController {
 		}
 		return resulTable;
 	}
-}
 
+	//@FXML
+	public void displayErrMsg(Exception e){
+		FileName.setText("Il faut choisir un fichier pour continuer !");
+		
+	}
+	
 	@FXML
 	public void exitApp(ActionEvent event){
 		System.exit(0);
