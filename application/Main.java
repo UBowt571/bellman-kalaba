@@ -24,24 +24,6 @@ public class Main extends Application {
 	}
     
     public static void main(String[] args) {
-        double[][] matrice = {
-            {0,8,3,6,10},
-            {0,0,0,0,2},
-            {0,0,0,3,0},
-            {0,2,0,0,4},
-            {0,0,0,0,0}
-        };
-        int[] niveauxSommets = {0,3,1,2,4};
-        Graphe g = new Graphe(matrice,niveauxSommets);
-        
-        //bellmanKalaba(g, true);
-        
-        /*circle=new Circle();
-        circle.setCenterX(50.0);
-        circle.setCenterY(20.0);
-        circle.setRadius(10.0);
-        circle.setFill(Paint.valueOf("red"));*/
-        
         launch(args);
     }
 }
